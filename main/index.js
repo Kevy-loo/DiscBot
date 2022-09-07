@@ -1,6 +1,6 @@
 require("dotenv").config(); //to start process from .env file
 const {Client, GatewayIntentBits}=require("discord.js");
-const { joinVoiceChannel } = require('@discordjs/voice');
+const { joinVoiceChannel, getVoiceConnection } = require('@discordjs/voice');
 
 
 const client=new Client({
@@ -17,15 +17,21 @@ const client=new Client({
 
 client.on("messageCreate", message => {
     const channel = message.member.voice.channel;
-	if (message.content === 'join') {
+	if (message.content === '/join') {
 		const connection = joinVoiceChannel({
 			channelId: channel.id,
 			guildId: message.guild.id,
 			adapterCreator: message.guild.voiceAdapterCreator,
+			selfDeaf: false,
 		});
+	}
+})
 
-	
-		
+
+client.on("messageCreate", message => {
+	if(message.content === '/leave') {
+		console.log('Bot is leaving')
+		getVoiceConnection(message.guildId).destroy()
 	}
 })
 // client.channels.fetch(id) // voice channel's id
@@ -48,7 +54,7 @@ client.once("ready", () =>{
 })
 
 client.on("messageCreate", message => {
-    if (message.content === "ping") {
+    if (message.content === "/ping") {
         message.channel.send({ content: 'pong'})
     }
 });
