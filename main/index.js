@@ -15,27 +15,27 @@ const client=new Client({
 
 
 
-// client.on("messageCreate", message => {
-// 	if (message.content === 'join') {
-// 		// console.log(message)
-// 		const connection = joinVoiceChannel({
-// 			channelId: message.channelId,
-// 			guildId: message.guildId,
-// 			adapterCreator: message.guild.voiceAdapterCreator,
-// 		});
+client.on("messageCreate", message => {
+    const channel = message.member.voice.channel;
+	if (message.content === 'join') {
+		const connection = joinVoiceChannel({
+			channelId: channel.id,
+			guildId: message.guild.id,
+			adapterCreator: message.guild.voiceAdapterCreator,
+		});
 
 	
 		
-// 	}
-// })
-client.channels.fetch(id) // voice channel's id
-    .then((channel) => { // channel object
-        const VoiceConnection = joinVoiceChannel({
-            channelId: channel.id, // the voice channel's id
-            guildId: channel.guild.id, // the guild that the channel is in
-            adapterCreator: channel.guild.voiceAdapterCreator // and setting the voice adapter creator
-        });
-    });
+	}
+})
+// client.channels.fetch(id) // voice channel's id
+//     .then((channel) => { // channel object
+//         const VoiceConnection = joinVoiceChannel({
+//             channelId: channel.id, // the voice channel's id
+//             guildId: channel.guild.id, // the guild that the channel is in
+//             adapterCreator: channel.guild.voiceAdapterCreator // and setting the voice adapter creator
+//         });
+//     });
 
 
 
